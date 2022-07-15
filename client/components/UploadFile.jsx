@@ -1,19 +1,21 @@
 import React from "react";
+import Image from 'next/image';
 
 function UploadFile() {
   return (
     <div className="bg-gradient-to-b from-blue-500 to-blue-900">
-      <div className="flex justify-center mt-4 md:mt-10">
-        <h1>Bhej-de</h1>
+      <div className="flex justify-center">
+        <h1 className="mt-4 md:mt-10 text-3xl sm:text-5xl md:text-6xl font-bold text-white drop-shadow-md">Upload File</h1>
       </div>
       <div className="flex flex-col md:flex-row items-center">
-        <div className="flex justify-center items-center my-20 md:w-1/2">
-          <div className="h-96 w-64 drop-shadow-2xl bg-gray-600 rounded-2xl p-5">
-            Image
+        <div className="flex flex-col md:flex-row justify-center items-center my-20 md:w-1/2">
+          <div className="h-96 w-64 drop-shadow-2xl bg-gray-600 rounded-2xl ml-5 p-5">
+            Image 
           </div>
+          <p className="mt-8 md:ml-6 text-2xl text-white">Share your files <br /> and care for others</p>
         </div>
 
-        <div className="flex flex-1 items-center md:w-1/2 my-20 pl-10">
+        <div className="flex flex-1 items-center md:w-1/2 my-20 p-5">
           <form action="/" className="flex flex-1 flex-col">
             <input
               className="w-full mb-5"
