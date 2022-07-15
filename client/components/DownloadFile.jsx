@@ -1,27 +1,27 @@
 import React from "react";
-import Image from 'next/image';
 
-function UploadFile() {
+function DownloadFile() {
   return (
-    <div className="bg-gradient-to-b from-blue-500 to-blue-900">
+    <div className="bg-gray-300">
       <div className="flex justify-center">
-        <h1 className="mt-4 md:mt-10 text-3xl sm:text-5xl md:text-6xl font-bold text-white drop-shadow-md">Upload File</h1>
+        <h1 className="mt-4 md:mt-10 text-3xl sm:text-5xl md:text-6xl font-bold text-blue-600 drop-shadow-xl">Download File</h1>
       </div>
       <div className="flex flex-col md:flex-row items-center">
         <div className="flex flex-col md:flex-row justify-center items-center my-20 md:w-1/2">
           <div className="h-96 w-64 drop-shadow-2xl bg-gray-600 rounded-2xl ml-5 p-5">
-            Image 
+            Image
           </div>
-          <p className="mt-8 md:ml-6 text-2xl text-white">Share your files <br /> and care for others</p>
+          <p className="mt-8 md:ml-6 text-2xl text-black">Download files <br /> whenever you want</p>
         </div>
 
         <div className="flex flex-1 items-center md:w-1/2 my-20 p-5">
           <form action="/" className="flex flex-1 flex-col">
             <input
-              className="w-full mb-5"
-              type="file"
+              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl"
+              type="text"
               name="file"
               id="file"
+              placeholder="Enter the url of you file"
               required
             />
             <input
@@ -44,4 +44,4 @@ function UploadFile() {
   );
 }
 
-export default UploadFile;
+export default DownloadFile;
