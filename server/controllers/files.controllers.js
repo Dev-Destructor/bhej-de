@@ -25,7 +25,6 @@ const uploadFile = async (req, res) => {
         message: "Please enter a valid email",
       });
     }
-
     if (req.body.password !== null && req.body.password !== "") {
       fileData.password = await bcrypt.hash(req.body.password, 10);
     }
