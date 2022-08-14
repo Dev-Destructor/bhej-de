@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "./env/secrets.env" });
+require("dotenv").config({ path: "../.env" });
 const mongoose = require("mongoose");
 
 const { DB_HOST, DB_PORT, DB_NAME } = process.env;
