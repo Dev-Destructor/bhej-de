@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "./env/secrets.env" });
+require("dotenv").config({ path: "./.env"});
 const app = require('./app');
 const http = require('http');
 
