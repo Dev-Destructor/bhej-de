@@ -16,7 +16,7 @@ function UploadFile() {
         </div>
 
         <div className="flex flex-1 items-center md:w-1/2 my-20 p-5">
-          <form action="/" className="flex flex-1 flex-col">
+          <form action="http://localhost:9000/api/upload" method="post" className="flex flex-1 flex-col">
             <input
               className="w-full mb-5"
               type="file"
@@ -25,11 +25,20 @@ function UploadFile() {
               required
             />
             <input
-              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl"
+              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl placeholder:pl-3"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter Email"
+              required
+            />
+            <input
+              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl placeholder:pl-3"
               type="password"
               name="password"
               id="password"
               placeholder="Enter Password"
+              required
             />
             <button
               className="px-5 py-2 md:w-1/2 font-bold bg-blue-700 rounded-lg text-white hover:bg-blue-900"

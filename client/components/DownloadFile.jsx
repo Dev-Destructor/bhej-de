@@ -17,7 +17,7 @@ function DownloadFile() {
         <div className="flex flex-1 items-center md:w-1/2 my-20 p-5">
           <form action="/" className="flex flex-1 flex-col">
             <input
-              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl"
+              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl placeholder:pl-3"
               type="text"
               name="file"
               id="file"
@@ -25,7 +25,7 @@ function DownloadFile() {
               required
             />
             <input
-              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl"
+              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl placeholder:pl-3"
               type="password"
               name="password"
               id="password"
