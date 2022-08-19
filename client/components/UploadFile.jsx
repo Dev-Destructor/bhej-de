@@ -1,7 +1,34 @@
-import React from "react";
-import Image from 'next/image';
+import React, { useState } from "react";
+import axios from 'axios';
 
 function UploadFile() {
+  const urlUpload = "http://localhost:9000/api/upload";
+  const [file, setFile ] = useState({});
+  const [email, setEmail] = useState("");
+  const [password, setPassword ] = useState("");
+
+  const data = {
+    file: file,
+    email: email,
+    password: password
+  }
+  
+  const config = {
+    headers: {
+        "Content-Type": "application/json, multipart/form-data"
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+    try {
+      await axios.post(urlUpload, data, config);
+      window.alert("File uploaded successfully, check your email");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
   return (
     <div className="bg-gradient-to-b from-blue-500 to-blue-900">
       <div className="flex justify-center">
@@ -16,16 +43,23 @@ function UploadFile() {
         </div>
 
         <div className="flex flex-1 items-center md:w-1/2 my-20 p-5">
-          <form action="http://localhost:9000/api/upload" method="post" className="flex flex-1 flex-col">
+          <form
+          onSubmit={handleSubmit}
+          className="flex flex-1 flex-col"
+          encType="multipart/form-data">
             <input
               className="w-full mb-5"
+              value={file}
+              onChange={(e) => setFile(e.target.value)}
               type="file"
               name="file"
               id="file"
               required
             />
             <input
-              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl placeholder:pl-3"
+              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl pl-3"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               type="email"
               name="email"
               id="email"
@@ -33,7 +67,9 @@ function UploadFile() {
               required
             />
             <input
-              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl placeholder:pl-3"
+              className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl pl-3"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               name="password"
               id="password"
