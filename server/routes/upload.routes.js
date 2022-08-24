@@ -1,17 +1,27 @@
 require("dotenv").config({ path: "../env/secrets.env" });
 const express = require("express");
 const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 const bcrypt = require("bcrypt");
 const schema = require("../models/File.model");
 const { transporter } = require("../config/nodemailer.js");
 const { AUTH_EMAIL } = process.env;
 const router = express.Router();
-const upload = multer({ dest: "uploads" });
+
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, 'uploads')
+  },
+  filename: (req, file, cb) => {
+      cb(null, file.originalname)
+  }
+});
+
+var upload = multer({ storage: storage });
 
 router.post("/upload", upload.single("file"), async (req, res) => {
   try {
-    const filePath = req.file.path;
-    const originalName = req.file.originalname;
     let { email } = req.body;
     email = email.trim().toLowerCase();
 
@@ -27,14 +37,16 @@ router.post("/upload", upload.single("file"), async (req, res) => {
     if (req.body.password !== null && req.body.password !== "") {
       password = await bcrypt.hash(req.body.password, 10);
     }
-
+    const originalName = req.file.originalname;
     const data = {
-      filePath,
-      originalName,
       email,
       password,
+      originalName,
+      image: {
+        data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.file.filename)),
+        contentType: 'image/png'
+    }
     };
-
     await schema.create(data);
     const mailOptions = {
       from: AUTH_EMAIL,
@@ -59,33 +71,33 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-const handleDownload = async (req, res) => {
-  try {
-    const originalName = req.body.file;
-    const pass = req.body.password;
+// const handleDownload = async (req, res) => {
+//   try {
+//     const originalName = req.body.file;
+//     const pass = req.body.password;
 
-    const file = await schema.findOne({ originalName: `${originalName}` });
+//     const file = await schema.findOne({ originalName: `${originalName}` });
 
-    if (file.password != null) {
-      const isMatch = await bcrypt.compare(pass, file.password);
-      if (!isMatch) {
-        res.status(400).json({
-          status: "error",
-          message: "Password is incorrect",
-        });
-        return
-      }
-    }
+//     if (file.password != null) {
+//       const isMatch = await bcrypt.compare(pass, file.password);
+//       if (!isMatch) {
+//         res.status(400).json({
+//           status: "error",
+//           message: "Password is incorrect",
+//         });
+//         return
+//       }
+//     }
 
-    downloadCount = file.downloadCount++;
-    await file.save();
-    res.download(`${file.filePath}`, file.originalName);
+//     downloadCount = file.downloadCount++;
+//     await file.save();
+//     res.download(`${file.filePath}`, file.originalName);
 
-  } catch (err) {
-    res.status(500).send({ message: err.message });
-  }
-};
+//   } catch (err) {
+//     res.status(500).send({ message: err.message });
+//   }
+// };
 
-router.route("/download").get(handleDownload).post(handleDownload);
+// router.route("/download").get(handleDownload).post(handleDownload);
 
 module.exports = router;
