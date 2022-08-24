@@ -1,19 +1,26 @@
 const mongoose = require('mongoose');
 
 const fileSchema = new mongoose.Schema({
-  path: {
+  email: {
     type: String,
-    required: true
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
   },
   originalName: {
     type: String,
-    required: true
+    required: true,
   },
-  password: String,
   downloadCount: {
     type: Number,
     required: true,
     default: 0
+  },
+  image: {
+    data: Buffer,
+    contentType: String,
   }
 })
 
