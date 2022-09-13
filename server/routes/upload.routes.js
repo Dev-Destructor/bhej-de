@@ -11,11 +11,11 @@ const router = express.Router();
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, 'uploads')
+    cb(null, "uploads");
   },
   filename: (req, file, cb) => {
-      cb(null, file.originalname)
-  }
+    cb(null, file.originalname);
+  },
 });
 
 var upload = multer({ storage: storage });
@@ -43,9 +43,11 @@ router.post("/upload", upload.single("file"), async (req, res) => {
       password,
       originalName,
       image: {
-        data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.file.filename)),
-        contentType: 'image/png'
-    }
+        data: fs.readFileSync(
+          path.join(__dirname + "/../uploads/" + req.file.filename)
+        ),
+        contentType: "image/png",
+      },
     };
     await schema.create(data);
     const mailOptions = {
@@ -71,33 +73,32 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-// const handleDownload = async (req, res) => {
-//   try {
-//     const originalName = req.body.file;
-//     const pass = req.body.password;
+const handleDownload = async (req, res) => {
+  try {
+    const originalName = req.body.file;
+    const password = req.body.password;
+    
+    console.log(originalName, password);
 
-//     const file = await schema.findOne({ originalName: `${originalName}` });
+    // const file = await schema.findOne({ originalName: `${originalName}` });
 
-//     if (file.password != null) {
-//       const isMatch = await bcrypt.compare(pass, file.password);
-//       if (!isMatch) {
-//         res.status(400).json({
-//           status: "error",
-//           message: "Password is incorrect",
-//         });
-//         return
-//       }
-//     }
+    // const isMatch = await bcrypt.compare(password, file.password);
+    // if (!isMatch) {
+    //   res.status(400).json({
+    //     status: "error",
+    //     message: "Password is incorrect",
+    //   });
+    //   return;
+    // }
 
-//     downloadCount = file.downloadCount++;
-//     await file.save();
-//     res.download(`${file.filePath}`, file.originalName);
+    // downloadCount = file.downloadCount++;
+    // await file.save();
+    // res.status(200).json(file);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
 
-//   } catch (err) {
-//     res.status(500).send({ message: err.message });
-//   }
-// };
-
-// router.route("/download").get(handleDownload).post(handleDownload);
+router.route("/download").get(handleDownload).post(handleDownload);
 
 module.exports = router;
