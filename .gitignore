@@ -35,3 +35,5 @@ server/env/secrets.env
 
 # database
 server/db_data
+
+server/.env
