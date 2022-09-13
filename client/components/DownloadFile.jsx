@@ -37,7 +37,7 @@ function DownloadFile() {
   };
 
   return (
-    <div id="download" className="bg-gray-300">
+    <div id="download" className="bg-gradient-to-b from-gray-300 to-gray-600">
       <div className="flex justify-center">
         <h1 className="mt-4 md:mt-10 text-3xl sm:text-5xl md:text-6xl font-bold text-blue-600 drop-shadow-xl">
           Download Image
