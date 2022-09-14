@@ -13,8 +13,4 @@ app.use(express.static('public'));
 
 app.use('/api', require('./routes/upload.routes'));
 
-app.get('/', (req, res) => {
-  res.status(200).json({ message: "hello world" });
-})
-
 module.exports = app;

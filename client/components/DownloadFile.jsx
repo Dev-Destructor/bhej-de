@@ -6,35 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function DownloadFile() {
   const urlDownload = "http://localhost:9000/api/download";
-  const queryData = new FormData();
-
-  const handleDownload = async (e) => {
-    e.preventDefault();
-
-    queryData.append("file", document.getElementById("file").value);
-    queryData.append("password", document.getElementById("password").value);
-
-    try {
-      await fetch(
-        urlDownload,
-        {
-          method: "POST",
-          body: queryData,
-        }
-      ).then((response) => {
-        if (response.status === 200) {
-          console.log(response);
-        } else {
-          // toast.error('Something went wrong, please try again.',  {
-          //   position: toast.POSITION.TOP_CENTER
-          // });
-          console.log(response);
-        }
-      });
-    } catch(err) {
-      console.log(err);
-    }
-  };
 
   return (
     <div id="download" className="bg-gradient-to-b from-gray-300 to-gray-600">
@@ -60,7 +31,7 @@ function DownloadFile() {
         </div>
 
         <div className="flex flex-1 items-center md:w-1/2 my-20 p-5">
-          <form onSubmit={handleDownload} className="flex flex-1 flex-col">
+          <form className="flex flex-1 flex-col" method="post" action={urlDownload}>
             <input
               className="mb-5 h-10 rounded-md w-full md:w-1/2 text-xl placeholder:text-xl pl-3"
               type="text"
@@ -75,6 +46,7 @@ function DownloadFile() {
               name="password"
               id="password"
               placeholder="Enter Password"
+              required
             />
             <button
               className="px-5 py-2 md:w-1/2 font-bold bg-blue-700 rounded-lg text-white hover:bg-blue-900"
