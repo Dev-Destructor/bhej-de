@@ -4,7 +4,6 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 const bcrypt = require("bcrypt");
-const bufferImage = require("buffer-image");
 const schema = require("../models/File.model");
 const { transporter } = require("../config/nodemailer.js");
 const { AUTH_EMAIL } = process.env;
@@ -77,10 +76,11 @@ router.post("/upload", upload.single("file"), async (req, res) => {
 const handleDownload = async (req, res) => {
   try {
     const originalName = req.body.file;
+    const password = req.body.password;
 
     const file = await schema.findOne({ originalName: `${originalName}` });
 
-    const isMatch = await bcrypt.compare(req.body.password, file.password);
+    const isMatch = await bcrypt.compare(password, file.password);
     if (!isMatch) {
       res.status(400).json({
         status: "error",
@@ -89,13 +89,9 @@ const handleDownload = async (req, res) => {
       return;
     }
 
-    const image = await bufferImage(Buffer.from(file.image));
- 
-    const result = await bufferImage.from(image)
+    const image = file.image.data;
+    res.status(200).send(image);
 
-    downloadCount = file.downloadCount++;
-    await file.save();
-    res.download(result);
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
