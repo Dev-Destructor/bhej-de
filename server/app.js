@@ -12,5 +12,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.use('/api', require('./routes/upload.routes'));
+app.use(express.static('out'));
+
+app.get('/', (req, res) => {
+    res.render('index');
+});
 
 module.exports = app;
