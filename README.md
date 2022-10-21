@@ -24,7 +24,7 @@ brcypt
 ## How to use
 1. Go to the server directory
 2. Run the following command
-> docker-compose up
+> Sudo docker-compose up
 
 <br/><br/>
 
